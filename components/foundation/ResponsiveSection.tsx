@@ -21,7 +21,7 @@ export function ResponsiveSection() {
           </Reveal>
         ))}
       </div>
-      <Reveal className="responsive-demo">
+      <Reveal className="responsive-demo" data-character-state="lookRight">
         <div className="device device--desktop"><i /><span>12</span></div>
         <div className="device device--tablet"><i /><span>08</span></div>
         <div className="device device--mobile"><i /><span>04</span></div>

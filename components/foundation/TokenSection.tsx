@@ -38,7 +38,7 @@ export function TokenSection() {
           <h3 id="type-title">Precision meets <em>emotion.</em></h3>
           <p>Manrope carries interface clarity. Instrument Serif introduces warmth, tension, and editorial contrast.</p>
         </Reveal>
-        <Reveal className="type-specimen" delay={0.08}>
+        <Reveal className="type-specimen" delay={0.08} data-character-state="design">
           <div className="type-specimen-meta"><span>Display / Instrument Serif</span><b>Responsive 72—240</b></div>
           <p contentEditable suppressContentEditableWarning spellCheck={false} role="textbox" aria-label="Editable display type specimen">Ideas should<br /><em>leave a mark.</em></p>
           <small>Click the specimen to type</small>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { CharacterDirector } from "@/components/character";
 import { ArchitectureSection } from "@/components/foundation/ArchitectureSection";
 import { ComponentsSection } from "@/components/foundation/ComponentsSection";
 import { DirectionSection } from "@/components/foundation/DirectionSection";
@@ -42,6 +43,7 @@ export function FoundationPreview() {
         <div className="grain" aria-hidden="true" />
         <Cursor />
         <GlobalNavigation />
+        <CharacterDirector ready={ready} />
         <FoundationHero ready={ready} />
         <DirectionSection />
         <TokenSection />

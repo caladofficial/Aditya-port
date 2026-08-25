@@ -70,4 +70,5 @@ export const architecture = [
   { layer: "02", name: "Primitives", detail: "Reveal · magnetic action · label · rule · frame" },
   { layer: "03", name: "Compositions", detail: "Editorial header · chapter intro · media index" },
   { layer: "04", name: "Scenes", detail: "Future resume-led portfolio narratives" },
+  { layer: "05", name: "Identity Director", detail: "Canonical Aditya rig · state machine · scene context" },
 ] as const;

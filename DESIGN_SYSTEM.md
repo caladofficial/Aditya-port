@@ -203,9 +203,14 @@ app/
   globals.css              canonical visual tokens and responsive rules
 
 components/
+  character/
+    AdityaCharacter.tsx    reusable public character API
+    CharacterDirector.tsx  global placement and state-machine connection
+    CanonicalCharacterAsset.tsx  replaceable canonical identity rig
+    character.config.ts    centralized section states and identity source
   foundation/
     FoundationPreview.tsx  lightweight review-surface composition
-    FoundationHero.tsx     portrait-led opening motion study
+    FoundationHero.tsx     character-led opening motion study
     *Section.tsx           focused foundation chapters
   system/
     Cursor.tsx             fine-pointer cursor primitive
@@ -218,12 +223,16 @@ components/
     SectionLabel.tsx       reusable editorial chapter marker
     Reveal.tsx             shared accessible in-view reveal
 
+hooks/
+  useCharacterState.ts     section, progress, hover/focus, viewport controller
+
 data/
   resume.ts                authoritative typed transcription of the supplied resume
   design-system.ts         typed visual-token metadata; identity derives from resume
 
 animations/
   motion.ts                canonical Framer easing, duration, spring, and variants
+  characterAnimations.ts   isolated articulated character state variants
   gsap.ts                  lazy GSAP + ScrollTrigger registration and scoped cleanup
 
 lib/
@@ -236,6 +245,9 @@ lib/
 2. **Primitives** — reveal, magnetic action, label, rule, frame.
 3. **Compositions** — editorial header, chapter intro, project index.
 4. **Scenes** — future resume-led portfolio storytelling.
+5. **Identity director** — the canonical Aditya rig persists across scenes while centralized state logic interprets section, progress, hover/focus, and viewport context.
+
+The character currently articulates one supplied photograph through editorial 2.5D masks. It never regenerates the face per state. The canonical asset boundary can be replaced later without changing scene code; see [`CHARACTER_SYSTEM.md`](./CHARACTER_SYSTEM.md).
 
 Any one-off value that repeats twice should be promoted into the system before more sections are built.
 
@@ -287,7 +299,8 @@ Any one-off value that repeats twice should be promoted into the system before m
 The root route is intentionally a live design-system specimen rather than the final portfolio. It demonstrates:
 
 - a readiness-aware `ADITYA RAI` opening film with phased numeric progress, clipped type, portrait preview, and a clip-path Hero handoff
-- masked hero-title choreography and a portrait reveal based on the uploaded photograph
+- masked hero-title choreography and a persistent layered Aditya character based on one supplied photograph
+- twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
 - a live animated signal route and high-energy interaction study
 - real type rendering

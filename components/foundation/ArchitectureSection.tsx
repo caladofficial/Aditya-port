@@ -25,7 +25,7 @@ export function ArchitectureSection() {
           </Reveal>
         ))}
       </div>
-      <Reveal className="architecture-note">
+      <Reveal className="architecture-note" data-character-state="code">
         <span>Source verified</span>
         <p>The supplied resume is normalized in the authoritative data layer. Its education, experience, project, certification, achievement, and contact content remains intentionally unrendered in this foundation phase.</p>
         <b>Content model ready →</b>

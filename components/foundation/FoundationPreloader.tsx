@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { eases } from "@/animations/motion";
+import { CANONICAL_CHARACTER } from "@/components/character/character.config";
 import { identity } from "@/data/design-system";
 
 type FoundationPreloaderProps = {
@@ -55,17 +56,21 @@ export function FoundationPreloader({ onReveal, onComplete }: Readonly<Foundatio
     let finishStartedAt: number | null = null;
     const startedAt = performance.now();
 
-    const portraitReady = new Promise<void>((resolve) => {
-      const portrait = new window.Image();
+    const preloadImage = (source: string) => new Promise<void>((resolve) => {
+      const image = new window.Image();
       const finish = () => resolve();
-      portrait.onload = finish;
-      portrait.onerror = finish;
-      portrait.src = PORTRAIT_SOURCE;
-      if (portrait.complete) finish();
+      image.onload = finish;
+      image.onerror = finish;
+      image.src = source;
+      if (image.complete) finish();
     });
 
     const fontsReady = document.fonts?.ready ?? Promise.resolve();
-    Promise.all([portraitReady, fontsReady]).then(() => {
+    Promise.all([
+      preloadImage(PORTRAIT_SOURCE),
+      preloadImage(CANONICAL_CHARACTER.source),
+      fontsReady,
+    ]).then(() => {
       if (!disposed) assetsReady = true;
     });
 

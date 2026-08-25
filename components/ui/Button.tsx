@@ -1,6 +1,7 @@
 "use client";
 
 import type { MouseEventHandler, ReactNode } from "react";
+import type { CharacterState } from "@/components/character/character.types";
 import { Magnetic } from "@/components/system/Magnetic";
 import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
@@ -11,6 +12,7 @@ type ButtonProps = {
   external?: boolean;
   magnetic?: boolean;
   cursorLabel?: "VIEW" | "EXPLORE";
+  characterState?: CharacterState;
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 };
@@ -23,6 +25,7 @@ export function Button({
   external = false,
   magnetic = variant === "primary",
   cursorLabel,
+  characterState,
   className = "",
   onClick,
 }: Readonly<ButtonProps>) {
@@ -35,6 +38,7 @@ export function Button({
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer noopener" : undefined}
+      data-character-state={characterState}
       onClick={onClick as MouseEventHandler<HTMLAnchorElement> | undefined}
     >
       <span>{children}</span>
@@ -44,6 +48,7 @@ export function Button({
     <button
       className={classes}
       type="button"
+      data-character-state={characterState}
       onClick={onClick as MouseEventHandler<HTMLButtonElement> | undefined}
     >
       <span>{children}</span>

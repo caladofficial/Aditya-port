@@ -12,7 +12,8 @@ It is intentionally **not the complete portfolio**. The supplied resume has now 
 - restrained geometry and radius system
 - shared Framer Motion timing and reveal primitives
 - readiness-aware `ADITYA RAI` identity preloader with phased typography, portrait preview, real progress, and a clip-path Hero handoff
-- masked hero typography, portrait reveal, moving name ticker, and scroll-progress chapter rail
+- signature layered `<AdityaCharacter />` system driven by section, scroll, hover/focus, and viewport state
+- masked hero typography, canonical character reveal, moving name ticker, and scroll-progress chapter rail
 - animated signal-path motion study inspired by the reference's narrative energy—not its branding or layout
 - desktop-only Lenis smooth scrolling
 - fine-pointer custom cursor and opt-in magnetic action
@@ -21,7 +22,7 @@ It is intentionally **not the complete portfolio**. The supplied resume has now 
 - a live design-system review page using Aditya's supplied portrait
 - documented component and content architecture
 
-See [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for the visual specification and [`NAVIGATION.md`](./NAVIGATION.md) for the navigation, active-section, accessibility, and scrolling architecture.
+See [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for the visual specification, [`CHARACTER_SYSTEM.md`](./CHARACTER_SYSTEM.md) for the canonical character contract and state machine, and [`NAVIGATION.md`](./NAVIGATION.md) for the navigation, active-section, accessibility, and scrolling architecture.
 
 ## Run
 
@@ -44,11 +45,14 @@ npm run build
 ```text
 app/                        route, metadata, and global tokens
 components/foundation/      focused foundation review chapters
+components/character/       canonical layered character and global director
 components/system/          navigation and interaction infrastructure
 components/ui/              button, heading, label, and reveal primitives
+hooks/useCharacterState.ts  section/scroll/hover/viewport character state machine
 data/resume.ts              authoritative resume content
 data/design-system.ts       typed visual-token metadata
 animations/motion.ts        Framer Motion source of truth
+animations/characterAnimations.ts  articulated character motion grammar
 animations/gsap.ts          GSAP/ScrollTrigger registration and cleanup
 public/images/aditya/       supplied portrait assets
 ```

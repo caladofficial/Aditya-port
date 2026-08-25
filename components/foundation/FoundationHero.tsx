@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { identity } from "@/data/design-system";
@@ -11,7 +10,6 @@ export function FoundationHero({ ready }: Readonly<{ ready: boolean }>) {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const titleY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -120]);
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 70]);
   const metaOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const motionDuration = (duration: number) => reduceMotion ? 0 : duration;
 
@@ -56,28 +54,6 @@ export function FoundationHero({ ready }: Readonly<{ ready: boolean }>) {
           transition={{ duration: motionDuration(0.7), delay: motionDuration(0.42), ease: eases.reveal }}
         >A cinematic interface language for <strong>{identity.name}.</strong></motion.p>
       </motion.div>
-
-      <motion.figure
-        className="hero-portrait-study"
-        style={{ y: portraitY }}
-        initial={{ opacity: 0, clipPath: "polygon(48% 48%, 52% 48%, 52% 52%, 48% 52%)", scale: 1.12 }}
-        animate={ready ? { opacity: 1, clipPath: "polygon(0 7%, 86% 0, 100% 88%, 12% 100%)", scale: 1 } : undefined}
-        transition={{ duration: motionDuration(1.25), delay: motionDuration(0.18), ease: eases.reveal }}
-      >
-        <Image
-          src="/images/aditya/poster-head.webp"
-          alt={`Portrait of ${identity.name}`}
-          fill
-          priority
-          sizes="(max-width: 767px) 46vw, 27vw"
-          quality={86}
-        />
-        <span className="portrait-wash" aria-hidden="true" />
-        <figcaption>
-          <span>Image direction</span>
-          <b>Editorial / human / high contrast</b>
-        </figcaption>
-      </motion.figure>
 
       <motion.div
         className="hero-roles"

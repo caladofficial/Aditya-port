@@ -31,7 +31,7 @@ export function MotionSection() {
             <circle cx="236" cy="286" r="5" />
             <circle cx="486" cy="126" r="5" />
           </svg>
-          <button className="motion-object" type="button" data-cursor-label="PLAY" aria-label="Preview the motion language">
+          <button className="motion-object" type="button" data-cursor-label="PLAY" data-character-state="analyze" aria-label="Preview the motion language">
             <span>Intent</span>
             <i /><i /><i />
           </button>

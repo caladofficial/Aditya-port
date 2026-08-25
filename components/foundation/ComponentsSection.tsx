@@ -20,8 +20,8 @@ export function ComponentsSection() {
         <Reveal className="component-cell component-cell--actions">
           <span className="component-caption">01 / Actions</span>
           <div className="action-stack">
-            <Button cursorLabel="EXPLORE">Primary action</Button>
-            <Button variant="text" magnetic={false}>Secondary action</Button>
+            <Button cursorLabel="EXPLORE" characterState="point">Primary action</Button>
+            <Button variant="text" magnetic={false} characterState="lookLeft">Secondary action</Button>
           </div>
         </Reveal>
 
@@ -36,7 +36,7 @@ export function ComponentsSection() {
 
         <Reveal className="component-cell component-cell--project" delay={0.08}>
           <span className="component-caption">03 / Project index prototype</span>
-          <button className="project-prototype" type="button" data-cursor-label="VIEW">
+          <button className="project-prototype" type="button" data-cursor-label="VIEW" data-character-state="present">
             <span>01</span>
             <div><small>Selected work / case study</small><strong>Project title</strong></div>
             <p>Role / Year</p>
