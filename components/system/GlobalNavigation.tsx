@@ -28,7 +28,16 @@ type GlobalNavigationProps = {
   ready?: boolean;
 };
 
-const observedSections = mobileItems.map((item) => item.target);
+const observedSections = [
+  "top",
+  "about",
+  "expertise",
+  "experience",
+  "projects",
+  "achievements",
+  "skills",
+  "contact",
+] as const;
 
 function focusSection(target: HTMLElement) {
   if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
@@ -80,6 +89,15 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
+  }, []);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
   }, []);
 
   useEffect(() => {
@@ -144,8 +162,12 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
         offset: -76,
         onComplete: activatedWithKeyboard ? () => focusSection(target) : undefined,
       });
-    }, menuOpen ? 80 : 0);
+    }, menuOpen ? 260 : 0);
   }, [menuOpen, scrollTo]);
+
+  const isActiveTarget = (target: string) => (
+    activeSection === target || (target === "expertise" && activeSection === "skills")
+  );
 
   return (
     <>
@@ -158,7 +180,12 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
         animate={ready ? { opacity: 1, y: 0 } : undefined}
         transition={{ duration: reduceMotion ? 0.01 : 0.62, delay: reduceMotion ? 0 : 0.16, ease: eases.reveal }}
       >
-        <a className="global-navigation-name" href="#top" onClick={(event) => navigate(event, "top")}>
+        <a
+          className="global-navigation-name"
+          href="#top"
+          aria-label={`${identity.name} — Home`}
+          onClick={(event) => navigate(event, "top")}
+        >
           <i aria-hidden="true" />
           <span>{identity.name}</span>
         </a>
@@ -168,8 +195,8 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
             <a
               key={item.target}
               href={`#${item.target}`}
-              aria-current={activeSection === item.target ? "location" : undefined}
-              data-active={activeSection === item.target}
+              aria-current={isActiveTarget(item.target) ? "location" : undefined}
+              data-active={isActiveTarget(item.target)}
               onClick={(event) => navigate(event, item.target)}
             >
               <span>{item.label}</span>
@@ -203,42 +230,56 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
             aria-label="Site navigation"
             initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
             animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
-            exit={reduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)" }}
-            transition={{ duration: reduceMotion ? 0.12 : 0.72, ease: eases.reveal }}
+            exit={reduceMotion
+              ? { opacity: 0 }
+              : {
+                  clipPath: "inset(0 0 100% 0)",
+                  transition: { duration: 0.58, delay: 0.18, ease: eases.exit },
+                }}
+            transition={{ duration: reduceMotion ? 0.12 : 0.68, ease: eases.reveal }}
           >
             <div className="mobile-navigation-grid" aria-hidden="true" />
-            <motion.span
-              className="mobile-navigation-monogram"
-              aria-hidden="true"
-              initial={{ opacity: 0, scale: 0.72, rotate: -8 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: reduceMotion ? 0 : 1, delay: reduceMotion ? 0 : 0.18, ease: eases.reveal }}
-            >AR</motion.span>
-
             <nav aria-label="Mobile navigation">
               {mobileItems.map((item, index) => (
                 <motion.a
                   key={item.target}
                   href={`#${item.target}`}
-                  aria-current={activeSection === item.target ? "location" : undefined}
-                  data-active={activeSection === item.target}
-                  initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+                  aria-current={isActiveTarget(item.target) ? "location" : undefined}
+                  data-active={isActiveTarget(item.target)}
+                  initial={reduceMotion ? false : { opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.62, delay: reduceMotion ? 0 : 0.16 + index * 0.055, ease: eases.reveal }}
+                  exit={reduceMotion
+                    ? { opacity: 0 }
+                    : {
+                        opacity: 0,
+                        y: 24,
+                        transition: {
+                          duration: 0.26,
+                          delay: (mobileItems.length - 1 - index) * 0.032,
+                          ease: eases.exit,
+                        },
+                      }}
+                  transition={{ duration: reduceMotion ? 0 : 0.56, delay: reduceMotion ? 0 : 0.13 + index * 0.05, ease: eases.reveal }}
                   onClick={(event) => navigate(event, item.target)}
                 >
-                  <span>{item.index} —</span>
+                  <span>{item.index}</span>
                   <strong>{item.label}</strong>
-                  <i aria-hidden="true">↗</i>
+                  <i aria-hidden="true" />
                 </motion.a>
               ))}
             </nav>
 
-            <div className="mobile-navigation-footer">
+            <motion.div
+              className="mobile-navigation-footer"
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: reduceMotion ? 0 : 0.2 } }}
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.42 }}
+            >
               <span>UI/UX Designer</span>
               <span>Frontend Developer</span>
               <b>Prayagraj, India</b>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

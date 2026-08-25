@@ -4,9 +4,9 @@
 
 `ADITYA RAI  ·  WORK  ABOUT  EXPERIENCE  SKILLS  CONTACT`
 
-- Fixed global header with a transparent initial state.
-- After 22px of scrolling, the header becomes slightly shorter and gains a restrained dark blur and hairline divider.
-- The active destination receives a small crimson point and underline.
+- Sticky global header with a transparent initial state.
+- After 22px of scrolling, the header gains a restrained dark blur and hairline divider without changing layout height.
+- The active destination receives one small crimson point; underlines are reserved for hover and focus.
 - The name includes a permanent crimson identity signal.
 - The header contains no filled buttons, panels, or decorative weight.
 
@@ -24,7 +24,7 @@ The toggle opens a full-viewport navigation layer containing:
 6. Achievements
 7. Contact
 
-The menu uses a directional clip-path reveal, staggered item transforms, restrained crimson geometry, and a low-contrast `AR` monogram. Reduced-motion users receive a short opacity transition instead.
+The menu uses a directional clip-path reveal, staggered item transforms, a quiet technical grid, and a single crimson active point. Closing reverses the item stagger and clip direction. Reduced-motion users receive a short opacity transition instead.
 
 ## Section contract
 
@@ -78,6 +78,8 @@ Anchor behavior includes:
 - Escape closes the menu and returns focus to the toggle.
 - Selecting a link releases the scroll lock before navigation.
 - Body scrolling and Lenis are paused while the menu is open.
+- Resizing into the desktop breakpoint closes the mobile dialog safely.
+- Short mobile viewports compact the menu and hide secondary footer metadata.
 - Touch devices retain native momentum and do not receive magnetic or custom-cursor behavior.
 
 ## Progress
