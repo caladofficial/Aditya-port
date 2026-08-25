@@ -1,5 +1,5 @@
-import { FoundationalScene } from "@/components/scene/FoundationalScene";
+import { FoundationPreview } from "@/components/foundation/FoundationPreview";
 
 export default function Home() {
-  return <FoundationalScene />;
+  return <FoundationPreview />;
 }

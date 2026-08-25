@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
-import { magnetic } from "@/lib/motion";
+import { magnetic } from "@/animations/motion";
 
 type MagneticProps = {
   children: React.ReactNode;

@@ -1,112 +1,112 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { identity } from "@/data/design-system";
+import { eases } from "@/animations/motion";
+import { useSmoothScroll } from "@/components/system/SmoothScroll";
 
-type MenuItem = {
-  index: string;
-  label: string;
-  target: string;
-  preview: "home" | "about" | "experience" | "projects" | "design" | "skills" | "contact";
-};
-
-const menuItems: readonly MenuItem[] = [
-  { index: "01", label: "HOME", target: "top", preview: "home" },
-  { index: "02", label: "ABOUT", target: "about", preview: "about" },
-  { index: "03", label: "EXPERIENCE", target: "experience", preview: "experience" },
-  { index: "04", label: "PROJECTS", target: "projects", preview: "projects" },
-  { index: "05", label: "DESIGN", target: "design", preview: "design" },
-  { index: "06", label: "SKILLS", target: "skills", preview: "skills" },
-  { index: "07", label: "CONTACT", target: "contact", preview: "contact" },
+const desktopItems = [
+  { label: "Work", target: "projects" },
+  { label: "About", target: "about" },
+  { label: "Experience", target: "experience" },
+  { label: "Skills", target: "skills" },
+  { label: "Contact", target: "contact" },
 ] as const;
 
-/**
- * One global navigation system. The scroll lock stores the current Y position
- * and restores it before an optional section navigation is performed.
- */
+const mobileItems = [
+  { index: "01", label: "Home", target: "top" },
+  { index: "02", label: "About", target: "about" },
+  { index: "03", label: "Expertise", target: "expertise" },
+  { index: "04", label: "Experience", target: "experience" },
+  { index: "05", label: "Projects", target: "projects" },
+  { index: "06", label: "Achievements", target: "achievements" },
+  { index: "07", label: "Contact", target: "contact" },
+] as const;
+
+const observedSections = mobileItems.map((item) => item.target);
+
+function focusSection(target: HTMLElement) {
+  if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+  target.focus({ preventScroll: true });
+}
+
 export function GlobalNavigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [preview, setPreview] = useState<MenuItem["preview"]>("home");
-  const [activeTarget, setActiveTarget] = useState("top");
-  const scrollPosition = useRef(0);
-  const pendingTarget = useRef<string | null>(null);
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const menuDialogRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollTo, start, stop } = useSmoothScroll();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 130, damping: 30, mass: 0.45 });
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("top");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const current = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
-        if (current?.target.id) setActiveTarget(current.target.id);
-      },
-      { rootMargin: "-34% 0px -52% 0px", threshold: [0.08, 0.3, 0.6] },
-    );
+    let frame = 0;
 
-    menuItems.forEach((item) => {
-      const target = document.getElementById(item.target);
-      if (target) observer.observe(target);
-    });
+    const update = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 22);
 
-    return () => observer.disconnect();
+      const marker = Math.min(window.innerHeight * 0.32, 260);
+      let current = "top";
+      for (const id of observedSections) {
+        const element = document.getElementById(id);
+        if (!element) continue;
+        const bounds = element.getBoundingClientRect();
+        if (bounds.top <= marker) current = id;
+        if (bounds.top <= marker && bounds.bottom > marker) {
+          current = id;
+          break;
+        }
+      }
+      setActiveSection((previous) => previous === current ? previous : current);
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
   }, []);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!menuOpen) return;
 
-    scrollPosition.current = window.scrollY;
     const body = document.body;
-    const previous = {
-      position: body.style.position,
-      top: body.style.top,
-      width: body.style.width,
-      overflow: body.style.overflow,
-    };
-
-    body.style.position = "fixed";
-    body.style.top = `-${scrollPosition.current}px`;
-    body.style.width = "100%";
+    const previousOverflow = body.style.overflow;
     body.style.overflow = "hidden";
     document.documentElement.dataset.menu = "open";
+    stop();
 
-    return () => {
-      body.style.position = previous.position;
-      body.style.top = previous.top;
-      body.style.width = previous.width;
-      body.style.overflow = previous.overflow;
-      delete document.documentElement.dataset.menu;
+    const focusFrame = window.requestAnimationFrame(() => {
+      menuRef.current?.querySelector<HTMLElement>("a")?.focus();
+    });
 
-      window.scrollTo(0, scrollPosition.current);
-      const targetId = pendingTarget.current;
-      if (targetId) {
-        pendingTarget.current = null;
-        window.requestAnimationFrame(() => {
-          document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    let focusFrame = 0;
-    const dialog = menuDialogRef.current;
-    const menuButton = menuButtonRef.current;
-    const getFocusable = () => [menuButton, ...Array.from(dialog?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [])].filter((element): element is HTMLElement => Boolean(element));
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        setIsOpen(false);
+        setMenuOpen(false);
+        window.requestAnimationFrame(() => toggleRef.current?.focus());
         return;
       }
-      if (event.key !== "Tab") return;
 
-      const focusable = getFocusable();
+      if (event.key !== "Tab" || !menuRef.current) return;
+      const focusable = Array.from(
+        menuRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      );
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
+
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
@@ -116,80 +116,117 @@ export function GlobalNavigation() {
       }
     };
 
-    focusFrame = window.requestAnimationFrame(() => getFocusable()[1]?.focus() ?? getFocusable()[0]?.focus());
     document.addEventListener("keydown", onKeyDown);
     return () => {
       window.cancelAnimationFrame(focusFrame);
       document.removeEventListener("keydown", onKeyDown);
-      menuButton?.focus();
+      body.style.overflow = previousOverflow;
+      delete document.documentElement.dataset.menu;
+      start();
     };
-  }, [isOpen]);
+  }, [menuOpen, start, stop]);
 
-  const navigate = useCallback((target: string) => {
-    pendingTarget.current = target;
-    setIsOpen(false);
-  }, []);
+  const navigate = useCallback((event: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    const target = document.getElementById(targetId);
+    const activatedWithKeyboard = event.detail === 0;
+    setMenuOpen(false);
 
-  const setPreviewForPointer = (item: MenuItem) => {
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) setPreview(item.preview);
-  };
+    if (!target) return;
+    event.preventDefault();
+    window.history.pushState(null, "", `#${targetId}`);
+
+    window.setTimeout(() => {
+      scrollTo(target, {
+        offset: -76,
+        onComplete: activatedWithKeyboard ? () => focusSection(target) : undefined,
+      });
+    }, menuOpen ? 80 : 0);
+  }, [menuOpen, scrollTo]);
 
   return (
     <>
-      <header className={`global-navigation ${isOpen ? "is-open" : ""}`} aria-label="Global navigation">
-        <a className="global-wordmark" href="#top" data-cursor="magnetic" data-cursor-label="HOME" aria-label="Aditya Rai — home">
-          ADITYA RAI
+      <motion.div className="global-scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
+      <header className="global-navigation" data-scrolled={scrolled} data-menu-open={menuOpen}>
+        <a className="global-navigation-name" href="#top" onClick={(event) => navigate(event, "top")}>
+          <i aria-hidden="true" />
+          <span>{identity.name}</span>
         </a>
-        <button ref={menuButtonRef} className="global-menu-toggle" type="button" data-cursor="magnetic" aria-label={isOpen ? "Close menu" : "Open menu"} aria-controls="global-menu-dialog" aria-expanded={isOpen} onClick={() => setIsOpen((open) => !open)}>
-          <span className="global-menu-label">{isOpen ? "CLOSE" : "MENU"}</span>
-          <span className="global-menu-icon" aria-hidden="true"><i /><i /></span>
+
+        <nav className="global-navigation-desktop" aria-label="Primary navigation">
+          {desktopItems.map((item) => (
+            <a
+              key={item.target}
+              href={`#${item.target}`}
+              aria-current={activeSection === item.target ? "location" : undefined}
+              data-active={activeSection === item.target}
+              onClick={(event) => navigate(event, item.target)}
+            >
+              <span>{item.label}</span>
+              <i aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
+
+        <button
+          ref={toggleRef}
+          className="global-navigation-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation-menu"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span>{menuOpen ? "Close" : "Menu"}</span>
+          <i aria-hidden="true"><b /><b /></i>
         </button>
       </header>
 
       <AnimatePresence>
-        {isOpen && (
+        {menuOpen && (
           <motion.div
-            ref={menuDialogRef}
-            id="global-menu-dialog"
-            className="global-menu"
-            data-preview={preview}
+            ref={menuRef}
+            id="mobile-navigation-menu"
+            className="mobile-navigation-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
-            initial={{ clipPath: "circle(0% at 94% 5%)" }}
-            animate={{ clipPath: "circle(150% at 94% 5%)" }}
-            exit={{ clipPath: "circle(0% at 94% 5%)" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
+            exit={reduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)" }}
+            transition={{ duration: reduceMotion ? 0.12 : 0.72, ease: eases.reveal }}
           >
-            <div className="global-menu-atmosphere" aria-hidden="true">
-              <span className="global-menu-bubble" />
-              <span className="global-menu-bubble-secondary" />
-            </div>
-            <nav className="global-menu-list" aria-label="Main navigation">
-              {menuItems.map((item, index) => (
+            <div className="mobile-navigation-grid" aria-hidden="true" />
+            <motion.span
+              className="mobile-navigation-monogram"
+              aria-hidden="true"
+              initial={{ opacity: 0, scale: 0.72, rotate: -8 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 1, delay: reduceMotion ? 0 : 0.18, ease: eases.reveal }}
+            >AR</motion.span>
+
+            <nav aria-label="Mobile navigation">
+              {mobileItems.map((item, index) => (
                 <motion.a
                   key={item.target}
                   href={`#${item.target}`}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    navigate(item.target);
-                  }}
-                  onPointerEnter={() => setPreviewForPointer(item)}
-                  onFocus={() => setPreview(item.preview)}
-                  aria-current={activeTarget === item.target ? "page" : undefined}
-                  className={activeTarget === item.target ? "is-current" : undefined}
-                  whileHover={{ x: 15 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 22, mass: 0.6 }}
+                  aria-current={activeSection === item.target ? "location" : undefined}
+                  data-active={activeSection === item.target}
+                  initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.62, delay: reduceMotion ? 0 : 0.16 + index * 0.055, ease: eases.reveal }}
+                  onClick={(event) => navigate(event, item.target)}
                 >
-                  <span>{item.index}</span>
+                  <span>{item.index} —</span>
                   <strong>{item.label}</strong>
-                  <i>{String(index + 1).padStart(2, "0")}</i>
+                  <i aria-hidden="true">↗</i>
                 </motion.a>
               ))}
             </nav>
-            <div className="global-menu-preview" aria-live="polite">
-              <span>SECTION PREVIEW</span>
-              <strong>{menuItems.find((item) => item.preview === preview)?.label}</strong>
+
+            <div className="mobile-navigation-footer">
+              <span>UI/UX Designer</span>
+              <span>Frontend Developer</span>
+              <b>Prayagraj, India</b>
             </div>
           </motion.div>
         )}

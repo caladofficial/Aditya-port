@@ -1,46 +1,71 @@
 # Aditya Rai — Portfolio Foundation
 
-The portfolio is being built as a continuous creative-technology experience. This pass establishes the **global design system and animation architecture only**; content sections are intentionally not present yet.
+This repository currently implements **Phase 01: the visual and interaction foundation** for Aditya Rai's portfolio.
 
-## Included foundation
+It is intentionally **not the complete portfolio**. The supplied resume has now been transcribed into the authoritative typed content source at `data/resume.ts`, while education, experience, projects, certifications, achievements, biography, and contact details remain unrendered until the next phase.
 
-- Next.js / React / TypeScript app shell
-- dark-first design system: graphite, warm white, electric blue, cyan and violet
-- responsive type, spacing, radius, depth and motion tokens in `app/globals.css`
-- shared Framer Motion utilities in `lib/motion.ts`
-- semantic personal-brand source of truth in `lib/site.ts`
-- Lenis smooth scrolling for desktop with native touch scroll retained on mobile
-- a reusable `FluidMetaballSystem`: hero, section, content and interactive metaballs; visual merging, soft click ripples, particles, scroll energy and scene retuning
-- desktop cursor that expands on interactions and supports `VIEW` / `EXPLORE` labels
-- reusable magnetic primitive for selected high-intent actions
-- a compact digital-film preloader with particle formation, AR / Aditya Rai reveal, minimal numeric progress and a continuous metaball handoff to the hero
-- reduced-motion behavior and animation/listener cleanup
+## Foundation included
 
-See [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for token use, responsive logic and the motion catalogue.
+- black, off-white, and deep-crimson colour system
+- Manrope + Instrument Serif editorial typography pairing
+- four-pixel spacing rhythm with cinematic section spacing
+- restrained geometry and radius system
+- shared Framer Motion timing and reveal primitives
+- readiness-aware `ADITYA RAI` identity preloader with phased typography, portrait preview, real progress, and a clip-path Hero handoff
+- masked hero typography, portrait reveal, moving name ticker, and scroll-progress chapter rail
+- animated signal-path motion study inspired by the reference's narrative energy—not its branding or layout
+- desktop-only Lenis smooth scrolling
+- fine-pointer custom cursor and opt-in magnetic action
+- touch and reduced-motion adaptations
+- responsive behavior across compact, mobile, tablet, desktop, and wide screens
+- a live design-system review page using Aditya's supplied portrait
+- documented component and content architecture
 
-## Run locally
+See [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for the visual specification and [`NAVIGATION.md`](./NAVIGATION.md) for the navigation, active-section, accessibility, and scrolling architecture.
+
+## Run
 
 ```bash
 npm ci
 npm run dev
 ```
 
-## Deploy on Vercel
+Then open `http://localhost:3000`.
 
-This is a standard Next.js application and is ready for Vercel without a custom configuration file:
+## Validate
 
-1. Push the project files (including `public/images/aditya/`) to a Git repository.
-2. Import that repository in Vercel.
-3. Leave the detected framework as **Next.js**.
-4. Use the default build command: `npm run build`.
+```bash
+npm run lint
+npm run build
+```
 
-The optimized portrait assets live in `public/images/aditya/`; original upload files are intentionally excluded through `.gitignore`.
+## Current source map
 
-## Quality constraints
+```text
+app/                        route, metadata, and global tokens
+components/foundation/      focused foundation review chapters
+components/system/          navigation and interaction infrastructure
+components/ui/              button, heading, label, and reveal primitives
+data/resume.ts              authoritative resume content
+data/design-system.ts       typed visual-token metadata
+animations/motion.ts        Framer Motion source of truth
+animations/gsap.ts          GSAP/ScrollTrigger registration and cleanup
+public/images/aditya/       supplied portrait assets
+```
 
-1. Use transform and opacity for routine UI motion.
-2. Respect `prefers-reduced-motion`; never hide content behind animation.
-3. Keep a single visual focal point per viewport.
-4. Reuse shared timing, easing and spring tokens.
-5. Canvas work is capped by DPR and suspended while the document is hidden.
-6. Do not build generic cards or disconnected template sections.
+## Technical decisions
+
+- **React + strict TypeScript:** retained through the existing Next.js app shell. Migrating to Vite now would remove working image optimization, metadata, routing, and production validation without improving the portfolio experience.
+- **Styling:** the established custom-property design system remains the canonical styling layer. Tailwind was not added as a second overlapping token system after the foundation was already implemented.
+- **Motion:** Framer Motion owns component and reveal choreography; Lenis owns desktop smoothing; the shared GSAP/ScrollTrigger utility is ready for later pinned or scrubbed narrative scenes.
+- **Architecture:** the former 449-line foundation module is now a small composition file backed by focused chapter modules and reusable UI primitives.
+
+## Next phase boundary
+
+After the foundation is approved:
+
+1. use the normalized `data/resume.ts` source without adding inferred claims;
+2. plan the narrative and project sequence;
+3. build portfolio scenes from the approved components;
+4. add verified contact details from the same source;
+5. review every rendered claim against the supplied resume before launch.
