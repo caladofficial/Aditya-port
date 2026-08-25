@@ -86,16 +86,35 @@ export const resume = {
     {
       name: "All Rounder Transport Tracking System",
       period: "Jan 2025 – Oct 2025",
+      type: "Real-time GPS tracking system",
+      summary: "Developed a real-time GPS tracking system.",
+      features: ["Real-time GPS tracking", "Route optimization", "Live updates"],
+      outcomes: [
+        { value: "15%", label: "Fuel usage reduction" },
+        { value: "20%", label: "Delivery speed improvement" },
+        { value: "25%", label: "Customer experience improvement" },
+      ],
       highlights: [
         "Developed real-time GPS tracking system using Python (Django) and React.",
         "Implemented route optimization reducing fuel usage by 15% and improving delivery speed by 20%.",
         "Enhanced customer experience by 25% through live tracking and real-time updates.",
       ],
-      technologies: ["Python", "Django", "React", "GPS tracking"],
+      technologies: ["Python", "Django", "React"],
     },
     {
-      name: "Heart Guard – AI-Based Heart Diagnosis Support System",
+      name: "Heart Guard",
+      subtitle: "AI-Based Heart Diagnosis Support System",
       period: "Jan 2026 – Present",
+      type: "AI-based health decision-support system",
+      summary: "AI-powered web application for heart disease risk prediction using real-time health data.",
+      features: [
+        "AI-based risk prediction",
+        "Chatbot interaction",
+        "Preventive healthcare guidance",
+        "Responsive UI",
+        "Firebase real-time synchronization",
+      ],
+      safetyNote: "Health decision-support only — not a diagnostic tool and not a replacement for doctors.",
       highlights: [
         "Built AI-powered web application for heart disease risk prediction using real-time health data.",
         "Integrated chatbot for user interaction and preventive healthcare guidance.",

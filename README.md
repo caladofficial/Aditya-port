@@ -2,7 +2,7 @@
 
 This repository currently implements **Phase 01: the visual and interaction foundation** for Aditya Rai's portfolio.
 
-It is intentionally **not the complete portfolio**. The supplied resume is the authoritative typed source at `data/resume.ts`. Hero, About, Expertise/Skills, and Experience now use its verified content, while detailed education, projects, certifications, achievements, and contact content remain for later scenes.
+It is intentionally **not the complete portfolio**. The supplied resume is the authoritative typed source at `data/resume.ts`. Hero, About, Expertise/Skills, Experience, and Selected Work now use its verified content, while detailed education, certifications, achievements, and contact content remain for later scenes.
 
 ## Foundation included
 
@@ -17,6 +17,8 @@ It is intentionally **not the complete portfolio**. The supplied resume is the a
 - resume-backed `HELLO, I'M ADITYA.` About section with scroll-synchronized character choreography
 - five-chapter Expertise/Skills index with verified skills, abstract visual studies, and character state sequencing
 - scroll-drawn professional Experience timeline with sequential reveals and walk-to-pose character choreography
+- data-driven `SELECTED WORK` chapters with asymmetric case-study layouts, abstract system visuals, verified outcomes, subtle parallax, and accessible full-screen details
+- explicit health decision-support framing and a no-quantitative-outcome state for Heart Guard
 - desktop-only Lenis smooth scrolling
 - fine-pointer custom cursor and opt-in magnetic action
 - touch and reduced-motion adaptations
@@ -56,6 +58,7 @@ hooks/useCharacterSequence.ts  multi-chapter character state sequencing
 data/resume.ts              authoritative resume content
 data/expertise.ts           verified expertise chapters derived from resume
 data/experience.ts          verified professional timeline derived from resume
+data/projects.ts            extensible case-study presentation records derived from resume
 data/design-system.ts       typed visual-token metadata
 animations/motion.ts        Framer Motion source of truth
 animations/characterAnimations.ts  articulated character motion grammar
@@ -67,7 +70,8 @@ public/images/aditya/       supplied portrait assets
 
 - **React + strict TypeScript:** retained through the existing Next.js app shell. Migrating to Vite now would remove working image optimization, metadata, routing, and production validation without improving the portfolio experience.
 - **Styling:** the established custom-property design system remains the canonical styling layer. Tailwind was not added as a second overlapping token system after the foundation was already implemented.
-- **Motion:** Framer Motion owns component and reveal choreography; Lenis owns desktop smoothing; the shared GSAP/ScrollTrigger utility is ready for later pinned or scrubbed narrative scenes.
+- **Motion:** Framer Motion owns component reveals, project parallax, and dialog transitions; Lenis owns desktop smoothing; GSAP/ScrollTrigger drives centralized scroll chapter and character sequences.
+- **Projects:** `data/resume.ts` → `data/projects.ts` → reusable chapter, visual, and dialog components. Visuals are abstract system studies—not fabricated screenshots—and every quantitative claim remains traceable to the resume.
 - **Architecture:** the former 449-line foundation module is now a small composition file backed by focused chapter modules and reusable UI primitives.
 
 ## Next phase boundary
@@ -75,7 +79,7 @@ public/images/aditya/       supplied portrait assets
 After the foundation is approved:
 
 1. use the normalized `data/resume.ts` source without adding inferred claims;
-2. plan the narrative and project sequence;
-3. build portfolio scenes from the approved components;
+2. plan the remaining education, achievement, and contact narrative;
+3. build those scenes from the approved components and data-object pattern;
 4. add verified contact details from the same source;
 5. review every rendered claim against the supplied resume before launch.

@@ -9,7 +9,7 @@ import { ExperienceSection } from "@/components/foundation/ExperienceSection";
 import { FoundationFooter } from "@/components/foundation/FoundationFooter";
 import { FoundationHero } from "@/components/foundation/FoundationHero";
 import { FoundationPreloader } from "@/components/foundation/FoundationPreloader";
-import { ResponsiveSection } from "@/components/foundation/ResponsiveSection";
+import { ProjectsSection } from "@/components/foundation/ProjectsSection";
 import { Cursor } from "@/components/system/Cursor";
 import { GlobalNavigation } from "@/components/system/GlobalNavigation";
 import { SmoothScroll } from "@/components/system/SmoothScroll";
@@ -47,7 +47,7 @@ export function FoundationPreview() {
         <AboutSection />
         <ExpertiseSection />
         <ExperienceSection />
-        <ResponsiveSection />
+        <ProjectsSection />
         <ComponentsSection />
         <FoundationFooter />
       </main>

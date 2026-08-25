@@ -25,7 +25,7 @@ export const characterSections = [
   { id: "about", state: "lookRight", position: "left" },
   { id: "expertise", state: "design", position: "right" },
   { id: "experience", state: "walk", position: "left" },
-  { id: "projects", state: "code", position: "right" },
+  { id: "projects", state: "point", position: "right" },
   { id: "achievements", state: "celebrate", position: "left" },
   { id: "skills", state: "present", position: "right" },
   { id: "contact", state: "wave", position: "left" },

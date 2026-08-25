@@ -4,7 +4,7 @@
 
 **Status:** Implemented for review
 
-**Content boundary:** The supplied resume has been normalized into a typed, authoritative data source. This phase still renders no portfolio biography, education, employment, project, certification, achievement, or contact sections.
+**Content boundary:** The supplied resume has been normalized into a typed, authoritative data source. This phase renders verified biography, expertise, employment, and project chapters; detailed education, certification, achievement, and contact scenes remain outside the current review surface.
 
 The reference portfolio informs the standard of pacing, atmosphere, editorial confidence, and interaction craft. It does **not** define this portfolio's layout, copy, visual motif, branding, or identity.
 
@@ -211,6 +211,9 @@ components/
   foundation/
     FoundationPreview.tsx  lightweight review-surface composition
     FoundationHero.tsx     character-led opening motion study
+    ProjectsSection.tsx    data-driven Selected Work chapter composition
+    ProjectVisual.tsx      abstract map/vehicle and health-data visual studies
+    ProjectCaseStudyDialog.tsx  accessible full-screen project details
     *Section.tsx           focused foundation chapters
   system/
     Cursor.tsx             fine-pointer cursor primitive
@@ -232,6 +235,7 @@ data/
   resume.ts                authoritative typed transcription of the supplied resume
   expertise.ts             five expertise chapters derived from resume skills
   experience.ts            professional timeline derived from resume experience
+  projects.ts              extensible project presentation records derived from resume
   design-system.ts         typed visual-token metadata; identity derives from resume
 
 animations/
@@ -252,6 +256,12 @@ lib/
 5. **Identity director** — the canonical Aditya rig persists across scenes while centralized state logic interprets section, progress, hover/focus, and viewport context.
 
 The character currently articulates one supplied photograph through editorial 2.5D masks. It never regenerates the face per state. The canonical asset boundary can be replaced later without changing scene code; see [`CHARACTER_SYSTEM.md`](./CHARACTER_SYSTEM.md).
+
+### Selected Work architecture
+
+Project facts remain in `data/resume.ts`. `data/projects.ts` derives typed presentation records—layout, abstract visual type, and character state—without duplicating factual copy. `ProjectsSection.tsx` maps those records through one reusable chapter composition, while `ProjectVisual.tsx` and `ProjectCaseStudyDialog.tsx` consume the same record. A future project therefore requires a data object, not copied case-study markup.
+
+The Transport chapter uses a map and moving vehicle abstraction and exposes only the resume-verified 15%, 20%, and 25% outcomes. Heart Guard uses a health-data/AI abstraction, is explicitly described as decision support rather than diagnosis, and states that no quantitative outcome is claimed. Neither visual is presented as a product screenshot.
 
 Any one-off value that repeats twice should be promoted into the system before more sections are built.
 
@@ -308,6 +318,9 @@ The root route is intentionally a live design-system specimen rather than the fi
 - a five-chapter Expertise/Skills sequence covering verified design, development, data, methodology, and computer-science capabilities
 - abstract wireframe, code, graph, architecture, and logic studies rather than fabricated project screenshots
 - a three-entry professional timeline whose crimson route draws with scroll progress and contains no fabricated company marks
+- two asymmetric, data-driven Selected Work chapters with abstract map/vehicle and health-data/AI interface studies
+- verified Transport outcomes, explicit Heart Guard decision-support safety language, and no fabricated Heart Guard metrics
+- subtle project parallax, hover/focus reactions, and accessible full-screen case-study details populated from the same project records
 - a persistent layered Aditya character that walks between experience entries and settles into present, design, and analyze poses
 - twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
