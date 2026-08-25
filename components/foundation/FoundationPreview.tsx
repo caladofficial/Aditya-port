@@ -5,10 +5,10 @@ import { CharacterDirector } from "@/components/character";
 import { AboutSection } from "@/components/foundation/AboutSection";
 import { ComponentsSection } from "@/components/foundation/ComponentsSection";
 import { ExpertiseSection } from "@/components/foundation/ExpertiseSection";
+import { ExperienceSection } from "@/components/foundation/ExperienceSection";
 import { FoundationFooter } from "@/components/foundation/FoundationFooter";
 import { FoundationHero } from "@/components/foundation/FoundationHero";
 import { FoundationPreloader } from "@/components/foundation/FoundationPreloader";
-import { MotionSection } from "@/components/foundation/MotionSection";
 import { ResponsiveSection } from "@/components/foundation/ResponsiveSection";
 import { Cursor } from "@/components/system/Cursor";
 import { GlobalNavigation } from "@/components/system/GlobalNavigation";
@@ -46,7 +46,7 @@ export function FoundationPreview() {
         <FoundationHero ready={ready} />
         <AboutSection />
         <ExpertiseSection />
-        <MotionSection />
+        <ExperienceSection />
         <ResponsiveSection />
         <ComponentsSection />
         <FoundationFooter />

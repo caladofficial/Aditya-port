@@ -11,6 +11,9 @@ import type { CharacterState } from "@/components/character/character.types";
 type CharacterSequenceOptions = {
   source: string;
   itemSelector?: string;
+  progressProperty?: `--${string}`;
+  transitionState?: CharacterState;
+  reverseTransitionState?: CharacterState;
 };
 
 /** Drives a sequence of character poses from editorial scroll chapters. */
@@ -19,6 +22,9 @@ export function useCharacterSequence<T extends HTMLElement>(
   {
     source,
     itemSelector = "[data-character-sequence-state]",
+    progressProperty = "--expertise-progress",
+    transitionState,
+    reverseTransitionState = "walkBack",
   }: CharacterSequenceOptions,
 ) {
   const reduceMotion = useReducedMotion();
@@ -43,7 +49,7 @@ export function useCharacterSequence<T extends HTMLElement>(
     };
 
     if (reduceMotion) {
-      section.style.setProperty("--expertise-progress", "1");
+      section.style.setProperty(progressProperty, "1");
       let frame = 0;
       const update = () => {
         frame = 0;
@@ -73,7 +79,7 @@ export function useCharacterSequence<T extends HTMLElement>(
         window.cancelAnimationFrame(frame);
         window.removeEventListener("scroll", schedule);
         window.removeEventListener("resize", schedule);
-        section.style.removeProperty("--expertise-progress");
+        section.style.removeProperty(progressProperty);
         emit(null);
       };
     }
@@ -86,7 +92,13 @@ export function useCharacterSequence<T extends HTMLElement>(
         start: "top 90%",
         end: "bottom 10%",
         onUpdate: (trigger) => {
-          section.style.setProperty("--expertise-progress", trigger.progress.toFixed(4));
+          section.style.setProperty(progressProperty, trigger.progress.toFixed(4));
+        },
+        onEnter: () => {
+          if (transitionState) emit(transitionState);
+        },
+        onEnterBack: () => {
+          if (transitionState) emit(reverseTransitionState);
         },
         onLeave: () => emit(null),
         onLeaveBack: () => emit(null),
@@ -98,9 +110,15 @@ export function useCharacterSequence<T extends HTMLElement>(
         ScrollTrigger.create({
           trigger: item,
           start: "top 58%",
-          end: "bottom 42%",
+          end: "top 24%",
           onEnter: () => emit(state),
           onEnterBack: () => emit(state),
+          onLeave: () => {
+            if (transitionState) emit(transitionState);
+          },
+          onLeaveBack: () => {
+            if (transitionState) emit(reverseTransitionState);
+          },
           onToggle: (trigger) => {
             if (trigger.isActive) emit(state);
           },
@@ -110,8 +128,16 @@ export function useCharacterSequence<T extends HTMLElement>(
 
     return () => {
       cleanupGsap();
-      section.style.removeProperty("--expertise-progress");
+      section.style.removeProperty(progressProperty);
       emit(null);
     };
-  }, [itemSelector, reduceMotion, sectionRef, source]);
+  }, [
+    itemSelector,
+    progressProperty,
+    reduceMotion,
+    reverseTransitionState,
+    sectionRef,
+    source,
+    transitionState,
+  ]);
 }

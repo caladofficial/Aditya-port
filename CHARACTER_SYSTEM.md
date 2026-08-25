@@ -79,7 +79,7 @@ Section-to-state and side placement are centralized in `components/character/cha
 
 Near section boundaries, the machine selects `walk` or `walkBack`. `useCharacterScrollScene` can supply a temporary ScrollTrigger-driven scene state without moving variants into section components. In About, the character walks on entry, settles toward the text through the active progress range, and resumes walking on departure; compact layouts reverse the look direction because the character stands on the right.
 
-`useCharacterSequence` extends the same event contract across repeated editorial chapters. The Expertise/Skills sequence resolves `design`, `code`, `analyze`, `present`, and `analyze` from the row crossing the viewport focus band. Hover/focus intent temporarily takes priority and then returns control to the current scene.
+`useCharacterSequence` extends the same event contract across repeated editorial chapters. Expertise/Skills resolves `design`, `code`, `analyze`, `present`, and `analyze` from the row crossing the viewport focus band. Experience adds `walk` and `walkBack` transition states between `present` for SIH leadership, `design` for E-cell UIT, and `analyze` for the data analyst role. Hover/focus intent temporarily takes priority and then returns control to the current scene.
 
 ## Accessibility and motion
 

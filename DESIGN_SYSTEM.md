@@ -231,6 +231,7 @@ hooks/
 data/
   resume.ts                authoritative typed transcription of the supplied resume
   expertise.ts             five expertise chapters derived from resume skills
+  experience.ts            professional timeline derived from resume experience
   design-system.ts         typed visual-token metadata; identity derives from resume
 
 animations/
@@ -306,7 +307,8 @@ The root route is intentionally a live design-system specimen rather than the fi
 - a resume-backed `HELLO, I'M ADITYA.` About chapter pairing oversized editorial type with a focused professional introduction
 - a five-chapter Expertise/Skills sequence covering verified design, development, data, methodology, and computer-science capabilities
 - abstract wireframe, code, graph, architecture, and logic studies rather than fabricated project screenshots
-- a persistent layered Aditya character whose state moves from design to code, analyze, present, and analyze across the expertise chapters
+- a three-entry professional timeline whose crimson route draws with scroll progress and contains no fabricated company marks
+- a persistent layered Aditya character that walks between experience entries and settles into present, design, and analyze poses
 - twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
 - a live animated signal route and high-energy interaction study

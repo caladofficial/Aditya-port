@@ -24,7 +24,7 @@ export const characterSections = [
   { id: "top", state: "idle", position: "right" },
   { id: "about", state: "lookRight", position: "left" },
   { id: "expertise", state: "design", position: "right" },
-  { id: "experience", state: "analyze", position: "left" },
+  { id: "experience", state: "walk", position: "left" },
   { id: "projects", state: "code", position: "right" },
   { id: "achievements", state: "celebrate", position: "left" },
   { id: "skills", state: "present", position: "right" },
@@ -41,7 +41,7 @@ export const characterStateLabels: Record<CharacterState, string> = {
   design: "Design mode",
   code: "Build mode",
   analyze: "Analysis mode",
-  present: "Presenting system",
+  present: "Leading / presenting",
   celebrate: "Milestone reached",
   wave: "Signing off",
 };

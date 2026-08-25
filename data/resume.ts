@@ -51,6 +51,8 @@ export const resume = {
       organisation: "Smart India Hackathon",
       location: "Prayagraj",
       period: "Jan 2025 – Oct 2025",
+      summary: "Led a cross-functional team and developed innovative solutions recognized for technical innovation.",
+      responsibilities: ["Project planning", "Mentoring", "Agile workflow", "Scalable prototype"],
       highlights: [
         "Led a cross-functional team and developed innovative solutions recognized for technical innovation.",
         "Managed project planning, mentoring, and agile workflow; designed a scalable prototype.",
@@ -61,6 +63,9 @@ export const resume = {
       organisation: "E-cell UIT",
       location: "Prayagraj",
       period: "Jan 2025 – Present",
+      summary: "Created visual assets boosting brand visibility by 30%.",
+      skills: ["Figma", "Adobe Suite", "UI/UX", "Brand consistency"],
+      delivery: "20+ projects delivered.",
       highlights: [
         "Created visual assets boosting brand visibility by 30%; designed UI/UX interfaces using Figma & Adobe Suite.",
         "Delivered 20+ projects ensuring brand consistency across all deliverables.",
@@ -71,6 +76,7 @@ export const resume = {
       organisation: "Capex Allocation Advisory",
       location: "Mumbai",
       period: "Jan 2023 – Jan 2024",
+      summary: "Assisted in data visualization and reporting automation to support decision-making.",
       highlights: [
         "Assisted in data visualization and reporting automation to support decision-making processes.",
       ],
