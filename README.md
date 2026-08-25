@@ -2,7 +2,7 @@
 
 This repository currently implements **Phase 01: the visual and interaction foundation** for Aditya Rai's portfolio.
 
-It is intentionally **not the complete portfolio**. The supplied resume has now been transcribed into the authoritative typed content source at `data/resume.ts`, while education, experience, projects, certifications, achievements, biography, and contact details remain unrendered until the next phase.
+It is intentionally **not the complete portfolio**. The supplied resume is the authoritative typed source at `data/resume.ts`. The Hero and About section now use its verified profile and high-level capabilities, while detailed education, experience timelines, projects, certifications, achievements, and contact content remain for later scenes.
 
 ## Foundation included
 
@@ -14,6 +14,7 @@ It is intentionally **not the complete portfolio**. The supplied resume has now 
 - readiness-aware `ADITYA RAI` identity preloader with phased typography, portrait preview, real progress, and a clip-path Hero handoff
 - signature layered `<AdityaCharacter />` system driven by section, scroll, hover/focus, and viewport state
 - asymmetric `DESIGN. BUILD. CREATE.` Hero with masked portrait, layered type, magnetic CTAs, and coordinated character entry
+- resume-backed `HELLO, I'M ADITYA.` About section with scroll-synchronized character choreography
 - animated signal-path motion study inspired by the reference's narrative energy—not its branding or layout
 - desktop-only Lenis smooth scrolling
 - fine-pointer custom cursor and opt-in magnetic action
@@ -49,6 +50,7 @@ components/character/       canonical layered character and global director
 components/system/          navigation and interaction infrastructure
 components/ui/              button, heading, label, and reveal primitives
 hooks/useCharacterState.ts  section/scroll/hover/viewport character state machine
+hooks/useCharacterScrollScene.ts  ScrollTrigger scene choreography bridge
 data/resume.ts              authoritative resume content
 data/design-system.ts       typed visual-token metadata
 animations/motion.ts        Framer Motion source of truth

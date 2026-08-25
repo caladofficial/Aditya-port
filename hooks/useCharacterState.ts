@@ -5,6 +5,10 @@ import {
   characterSections,
   isCharacterState,
 } from "@/components/character/character.config";
+import {
+  CHARACTER_SCENE_EVENT,
+  type CharacterSceneDetail,
+} from "@/components/character/character.events";
 import type {
   CharacterSectionConfig,
   CharacterSnapshot,
@@ -46,8 +50,6 @@ function getScale(viewport: CharacterViewport) {
 
 function adaptStateForViewport(state: CharacterState, viewport: CharacterViewport) {
   if (viewport !== "compact") return state;
-  if (state === "walk") return "lookRight";
-  if (state === "walkBack") return "lookLeft";
   if (state === "celebrate") return "wave";
   return state;
 }
@@ -78,6 +80,7 @@ export function useCharacterState({
     let previousScrollY = window.scrollY;
     let direction: "forward" | "backward" = "forward";
     let hoverState: CharacterState | null = null;
+    let sceneOverride: CharacterSceneDetail | null = null;
     let pointerLook: CharacterState | null = null;
     let pointerReset = 0;
 
@@ -125,6 +128,7 @@ export function useCharacterState({
       if (active.config.id === "top" && pointerLook && !approachingBoundary) {
         nextState = pointerLook;
       }
+      if (sceneOverride?.state) nextState = sceneOverride.state;
       if (hoverState) nextState = hoverState;
       nextState = adaptStateForViewport(nextState, viewport);
 
@@ -158,6 +162,14 @@ export function useCharacterState({
       const stateTarget = target.closest<HTMLElement>("[data-character-state]");
       const value = stateTarget?.dataset.characterState;
       return isCharacterState(value) ? value : null;
+    };
+
+    const handleSceneState = (event: Event) => {
+      const detail = (event as CustomEvent<CharacterSceneDetail>).detail;
+      if (!detail) return;
+      if (detail.state === null && sceneOverride?.source !== detail.source) return;
+      sceneOverride = detail.state === null ? null : detail;
+      scheduleEvaluation();
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -212,6 +224,7 @@ export function useCharacterState({
 
     window.addEventListener("scroll", scheduleEvaluation, { passive: true });
     window.addEventListener("resize", scheduleEvaluation, { passive: true });
+    window.addEventListener(CHARACTER_SCENE_EVENT, handleSceneState);
     document.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("pointerover", handlePointerOver);
     document.addEventListener("pointerout", handlePointerOut);
@@ -224,6 +237,7 @@ export function useCharacterState({
       window.clearTimeout(pointerReset);
       window.removeEventListener("scroll", scheduleEvaluation);
       window.removeEventListener("resize", scheduleEvaluation);
+      window.removeEventListener(CHARACTER_SCENE_EVENT, handleSceneState);
       document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);

@@ -225,6 +225,7 @@ components/
 
 hooks/
   useCharacterState.ts     section, progress, hover/focus, viewport controller
+  useCharacterScrollScene.ts  GSAP scene-progress bridge for character choreography
 
 data/
   resume.ts                authoritative typed transcription of the supplied resume
@@ -300,7 +301,8 @@ The root route is intentionally a live design-system specimen rather than the fi
 
 - a readiness-aware `ADITYA RAI` opening film with phased numeric progress, clipped type, portrait preview, and a clip-path Hero handoff
 - an asymmetric `DESIGN. BUILD. CREATE.` Hero with layered headline choreography, a masked supplied portrait, concise identity copy, and magnetic work/contact actions
-- a persistent layered Aditya character whose Hero entry follows the portrait and responds quietly to CTA focus/hover and pointer direction
+- a resume-backed `HELLO, I'M ADITYA.` About chapter pairing oversized editorial type with a focused professional introduction
+- a persistent layered Aditya character whose Hero entry follows the portrait, then walks into and responds to the About chapter through ScrollTrigger progress
 - twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
 - a live animated signal route and high-energy interaction study

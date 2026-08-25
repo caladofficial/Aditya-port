@@ -2,9 +2,9 @@
 
 import { useCallback, useRef, useState } from "react";
 import { CharacterDirector } from "@/components/character";
+import { AboutSection } from "@/components/foundation/AboutSection";
 import { ArchitectureSection } from "@/components/foundation/ArchitectureSection";
 import { ComponentsSection } from "@/components/foundation/ComponentsSection";
-import { DirectionSection } from "@/components/foundation/DirectionSection";
 import { FoundationFooter } from "@/components/foundation/FoundationFooter";
 import { FoundationHero } from "@/components/foundation/FoundationHero";
 import { FoundationPreloader } from "@/components/foundation/FoundationPreloader";
@@ -45,7 +45,7 @@ export function FoundationPreview() {
         <GlobalNavigation ready={ready} />
         <CharacterDirector ready={ready} entryDelay={0.96} />
         <FoundationHero ready={ready} />
-        <DirectionSection />
+        <AboutSection />
         <TokenSection />
         <MotionSection />
         <ResponsiveSection />

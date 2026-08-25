@@ -27,7 +27,7 @@ export function ArchitectureSection() {
       </div>
       <Reveal className="architecture-note" data-character-state="code">
         <span>Source verified</span>
-        <p>The supplied resume is normalized in the authoritative data layer. Its education, experience, project, certification, achievement, and contact content remains intentionally unrendered in this foundation phase.</p>
+        <p>The supplied resume is normalized in the authoritative data layer. The Hero and About use verified profile facts; detailed education, experience timelines, projects, certifications, achievements, and contact content remain intentionally unrendered.</p>
         <b>Content model ready →</b>
       </Reveal>
     </section>

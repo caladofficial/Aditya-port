@@ -69,15 +69,15 @@ Secondary behavior is deliberately quiet: slow torso breathing, infrequent blink
 `hooks/useCharacterState.ts` is the single behavioral controller. It resolves a snapshot from:
 
 1. the section crossing the viewport activation line;
-2. progress through that section;
-3. forward or backward scroll direction;
+2. progress through that section and forward/backward scroll direction;
+3. an optional scene-level ScrollTrigger state from `useCharacterScrollScene`;
 4. the closest hovered or keyboard-focused `[data-character-state]` target;
 5. restrained desktop pointer direction while the Hero is active;
 6. the compact, mobile, tablet, desktop, or wide viewport mode.
 
 Section-to-state and side placement are centralized in `components/character/character.config.ts`. Scenes do not contain animation variants.
 
-Near section boundaries, the machine selects `walk` or `walkBack`. Compact screens replace locomotion loops with static directional looks. Hover/focus intent temporarily takes priority and then returns control to the current section.
+Near section boundaries, the machine selects `walk` or `walkBack`. `useCharacterScrollScene` can supply a temporary ScrollTrigger-driven scene state without moving variants into section components. In About, the character walks on entry, settles toward the text through the active progress range, and resumes walking on departure; compact layouts reverse the look direction because the character stands on the right. Hover/focus intent temporarily takes priority and then returns control to the current scene.
 
 ## Accessibility and motion
 
