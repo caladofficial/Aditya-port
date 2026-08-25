@@ -8,6 +8,7 @@ import { useCharacterState } from "@/hooks/useCharacterState";
 
 type CharacterDirectorProps = {
   ready: boolean;
+  entryDelay?: number;
 };
 
 type DirectorStyle = CSSProperties & {
@@ -15,7 +16,7 @@ type DirectorStyle = CSSProperties & {
 };
 
 /** Owns global placement and connects the character rig to the state machine. */
-export function CharacterDirector({ ready }: Readonly<CharacterDirectorProps>) {
+export function CharacterDirector({ ready, entryDelay = 0 }: Readonly<CharacterDirectorProps>) {
   const reduceMotion = useReducedMotion();
   const character = useCharacterState({ enabled: ready });
   const style: DirectorStyle = { "--section-progress": character.sectionProgress };
@@ -32,7 +33,11 @@ export function CharacterDirector({ ready }: Readonly<CharacterDirectorProps>) {
           initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.72, ease: eases.reveal }}
+          transition={{
+            duration: reduceMotion ? 0.01 : 0.72,
+            delay: reduceMotion ? 0 : entryDelay,
+            ease: eases.reveal,
+          }}
           aria-label="Aditya character system"
         >
           <motion.div

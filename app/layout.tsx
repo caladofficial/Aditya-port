@@ -5,8 +5,8 @@ import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Aditya Rai — Portfolio Design System",
-  description: "The cinematic visual and interaction foundation for Aditya Rai's personal portfolio.",
+  title: "Aditya Rai — UI/UX Designer & Frontend Developer",
+  description: "Aditya Rai designs and builds thoughtful digital experiences through design, code, and technology.",
 };
 
 export const viewport: Viewport = {

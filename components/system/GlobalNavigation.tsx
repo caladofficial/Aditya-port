@@ -24,6 +24,10 @@ const mobileItems = [
   { index: "07", label: "Contact", target: "contact" },
 ] as const;
 
+type GlobalNavigationProps = {
+  ready?: boolean;
+};
+
 const observedSections = mobileItems.map((item) => item.target);
 
 function focusSection(target: HTMLElement) {
@@ -31,7 +35,7 @@ function focusSection(target: HTMLElement) {
   target.focus({ preventScroll: true });
 }
 
-export function GlobalNavigation() {
+export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProps>) {
   const reduceMotion = useReducedMotion();
   const { scrollTo, start, stop } = useSmoothScroll();
   const { scrollYProgress } = useScroll();
@@ -146,7 +150,14 @@ export function GlobalNavigation() {
   return (
     <>
       <motion.div className="global-scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
-      <header className="global-navigation" data-scrolled={scrolled} data-menu-open={menuOpen}>
+      <motion.header
+        className="global-navigation"
+        data-scrolled={scrolled}
+        data-menu-open={menuOpen}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -14 }}
+        animate={ready ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: reduceMotion ? 0.01 : 0.62, delay: reduceMotion ? 0 : 0.16, ease: eases.reveal }}
+      >
         <a className="global-navigation-name" href="#top" onClick={(event) => navigate(event, "top")}>
           <i aria-hidden="true" />
           <span>{identity.name}</span>
@@ -179,7 +190,7 @@ export function GlobalNavigation() {
           <span>{menuOpen ? "Close" : "Menu"}</span>
           <i aria-hidden="true"><b /><b /></i>
         </button>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
         {menuOpen && (

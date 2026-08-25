@@ -78,6 +78,8 @@ export function useCharacterState({
     let previousScrollY = window.scrollY;
     let direction: "forward" | "backward" = "forward";
     let hoverState: CharacterState | null = null;
+    let pointerLook: CharacterState | null = null;
+    let pointerReset = 0;
 
     const evaluate = () => {
       frame = 0;
@@ -120,6 +122,9 @@ export function useCharacterState({
       if (approachingBoundary) {
         nextState = direction === "forward" ? "walk" : "walkBack";
       }
+      if (active.config.id === "top" && pointerLook && !approachingBoundary) {
+        nextState = pointerLook;
+      }
       if (hoverState) nextState = hoverState;
       nextState = adaptStateForViewport(nextState, viewport);
 
@@ -155,6 +160,28 @@ export function useCharacterState({
       return isCharacterState(value) ? value : null;
     };
 
+    const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || window.innerWidth < 768) return;
+      const nextLook = event.clientX < window.innerWidth * 0.42
+        ? "lookLeft"
+        : event.clientX > window.innerWidth * 0.58
+          ? "lookRight"
+          : null;
+
+      if (pointerLook !== nextLook) {
+        pointerLook = nextLook;
+        scheduleEvaluation();
+      }
+
+      window.clearTimeout(pointerReset);
+      if (nextLook) {
+        pointerReset = window.setTimeout(() => {
+          pointerLook = null;
+          scheduleEvaluation();
+        }, 720);
+      }
+    };
+
     const handlePointerOver = (event: PointerEvent) => {
       const nextHoverState = stateFromTarget(event.target);
       if (!nextHoverState) return;
@@ -185,6 +212,7 @@ export function useCharacterState({
 
     window.addEventListener("scroll", scheduleEvaluation, { passive: true });
     window.addEventListener("resize", scheduleEvaluation, { passive: true });
+    document.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("pointerover", handlePointerOver);
     document.addEventListener("pointerout", handlePointerOut);
     document.addEventListener("focusin", handleFocusIn);
@@ -193,8 +221,10 @@ export function useCharacterState({
 
     return () => {
       window.cancelAnimationFrame(frame);
+      window.clearTimeout(pointerReset);
       window.removeEventListener("scroll", scheduleEvaluation);
       window.removeEventListener("resize", scheduleEvaluation);
+      document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);
       document.removeEventListener("focusin", handleFocusIn);

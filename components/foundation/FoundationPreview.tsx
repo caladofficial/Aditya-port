@@ -42,8 +42,8 @@ export function FoundationPreview() {
         <div className="pointer-glow" aria-hidden="true" />
         <div className="grain" aria-hidden="true" />
         <Cursor />
-        <GlobalNavigation />
-        <CharacterDirector ready={ready} />
+        <GlobalNavigation ready={ready} />
+        <CharacterDirector ready={ready} entryDelay={0.96} />
         <FoundationHero ready={ready} />
         <DirectionSection />
         <TokenSection />

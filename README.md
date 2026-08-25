@@ -13,7 +13,7 @@ It is intentionally **not the complete portfolio**. The supplied resume has now 
 - shared Framer Motion timing and reveal primitives
 - readiness-aware `ADITYA RAI` identity preloader with phased typography, portrait preview, real progress, and a clip-path Hero handoff
 - signature layered `<AdityaCharacter />` system driven by section, scroll, hover/focus, and viewport state
-- masked hero typography, canonical character reveal, moving name ticker, and scroll-progress chapter rail
+- asymmetric `DESIGN. BUILD. CREATE.` Hero with masked portrait, layered type, magnetic CTAs, and coordinated character entry
 - animated signal-path motion study inspired by the reference's narrative energy—not its branding or layout
 - desktop-only Lenis smooth scrolling
 - fine-pointer custom cursor and opt-in magnetic action

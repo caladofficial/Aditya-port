@@ -72,7 +72,8 @@ Secondary behavior is deliberately quiet: slow torso breathing, infrequent blink
 2. progress through that section;
 3. forward or backward scroll direction;
 4. the closest hovered or keyboard-focused `[data-character-state]` target;
-5. the compact, mobile, tablet, desktop, or wide viewport mode.
+5. restrained desktop pointer direction while the Hero is active;
+6. the compact, mobile, tablet, desktop, or wide viewport mode.
 
 Section-to-state and side placement are centralized in `components/character/character.config.ts`. Scenes do not contain animation variants.
 

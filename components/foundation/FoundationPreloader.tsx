@@ -13,6 +13,7 @@ type FoundationPreloaderProps = {
 };
 
 const PORTRAIT_SOURCE = "/images/aditya/poster-head.webp";
+const HERO_PORTRAIT_SOURCE = "/images/aditya/hero-portrait.webp";
 
 export function FoundationPreloader({ onReveal, onComplete }: Readonly<FoundationPreloaderProps>) {
   const reduceMotion = useReducedMotion();
@@ -68,6 +69,7 @@ export function FoundationPreloader({ onReveal, onComplete }: Readonly<Foundatio
     const fontsReady = document.fonts?.ready ?? Promise.resolve();
     Promise.all([
       preloadImage(PORTRAIT_SOURCE),
+      preloadImage(HERO_PORTRAIT_SOURCE),
       preloadImage(CANONICAL_CHARACTER.source),
       fontsReady,
     ]).then(() => {
@@ -135,7 +137,7 @@ export function FoundationPreloader({ onReveal, onComplete }: Readonly<Foundatio
           initial={false}
           exit={reduceMotion
             ? { opacity: 0 }
-            : { clipPath: "inset(0 0 100% 0)", y: "-1.5%", scale: 1.01 }}
+            : { clipPath: "inset(100% 0 0 0)", y: "1.5%", scale: 1.01 }}
           transition={{ duration: reduceMotion ? 0.1 : 0.52, ease: eases.exit }}
           role="status"
           aria-live="polite"

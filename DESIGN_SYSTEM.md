@@ -299,7 +299,8 @@ Any one-off value that repeats twice should be promoted into the system before m
 The root route is intentionally a live design-system specimen rather than the final portfolio. It demonstrates:
 
 - a readiness-aware `ADITYA RAI` opening film with phased numeric progress, clipped type, portrait preview, and a clip-path Hero handoff
-- masked hero-title choreography and a persistent layered Aditya character based on one supplied photograph
+- an asymmetric `DESIGN. BUILD. CREATE.` Hero with layered headline choreography, a masked supplied portrait, concise identity copy, and magnetic work/contact actions
+- a persistent layered Aditya character whose Hero entry follows the portrait and responds quietly to CTA focus/hover and pointer direction
 - twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
 - a live animated signal route and high-energy interaction study
