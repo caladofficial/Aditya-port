@@ -5,7 +5,7 @@ import { breakpoints } from "@/data/design-system";
 export function ResponsiveSection() {
   return (
     <section id="projects" className="responsive-section page-section" aria-labelledby="responsive-title" tabIndex={-1}>
-      <SectionLabel index="03" note="Responsive logic">Same identity, different behavior</SectionLabel>
+      <SectionLabel index="04" note="Responsive logic">Same identity, different behavior</SectionLabel>
       <Reveal className="responsive-heading">
         <h2 id="responsive-title">One system.<br /><em>Five expressions.</em></h2>
         <p>Responsiveness is not a scaled desktop. Composition, density, input method, and motion all adapt together.</p>

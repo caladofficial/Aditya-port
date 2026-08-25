@@ -165,9 +165,12 @@ export function GlobalNavigation({ ready = true }: Readonly<GlobalNavigationProp
     }, menuOpen ? 260 : 0);
   }, [menuOpen, scrollTo]);
 
-  const isActiveTarget = (target: string) => (
-    activeSection === target || (target === "expertise" && activeSection === "skills")
-  );
+  const isActiveTarget = (target: string) => {
+    if (target === "expertise" || target === "skills") {
+      return activeSection === "expertise" || activeSection === "skills";
+    }
+    return activeSection === target;
+  };
 
   return (
     <>

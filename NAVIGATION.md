@@ -41,7 +41,7 @@ Future portfolio scenes use these stable anchors:
 | Skills | `#skills` |
 | Contact | `#contact` |
 
-The current foundation chapters temporarily occupy the same anchor contract so navigation and current-section detection can be reviewed before the final scenes are built.
+The Expertise/Skills scene exposes both anchors: mobile `EXPERTISE` opens the chapter introduction and desktop `SKILLS` opens its numbered skills index. Both resolve to one shared active state.
 
 ## Current-section detection
 

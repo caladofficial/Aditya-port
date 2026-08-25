@@ -7,7 +7,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 export function ComponentsSection() {
   return (
     <section id="achievements" className="components-section page-section" aria-labelledby="components-title" tabIndex={-1}>
-      <SectionLabel index="04" note="Primitive library">Reusable, never generic</SectionLabel>
+      <SectionLabel index="05" note="Primitive library">Reusable, never generic</SectionLabel>
       <SectionHeading
         id="components-title"
         className="components-heading"

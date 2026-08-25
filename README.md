@@ -2,7 +2,7 @@
 
 This repository currently implements **Phase 01: the visual and interaction foundation** for Aditya Rai's portfolio.
 
-It is intentionally **not the complete portfolio**. The supplied resume is the authoritative typed source at `data/resume.ts`. The Hero and About section now use its verified profile and high-level capabilities, while detailed education, experience timelines, projects, certifications, achievements, and contact content remain for later scenes.
+It is intentionally **not the complete portfolio**. The supplied resume is the authoritative typed source at `data/resume.ts`. The Hero, About, and Expertise/Skills scenes now use its verified profile and capabilities, while detailed education, experience timelines, projects, certifications, achievements, and contact content remain for later scenes.
 
 ## Foundation included
 
@@ -15,12 +15,13 @@ It is intentionally **not the complete portfolio**. The supplied resume is the a
 - signature layered `<AdityaCharacter />` system driven by section, scroll, hover/focus, and viewport state
 - asymmetric `DESIGN. BUILD. CREATE.` Hero with masked portrait, layered type, magnetic CTAs, and coordinated character entry
 - resume-backed `HELLO, I'M ADITYA.` About section with scroll-synchronized character choreography
+- five-chapter Expertise/Skills index with verified skills, abstract visual studies, and character state sequencing
 - animated signal-path motion study inspired by the reference's narrative energy—not its branding or layout
 - desktop-only Lenis smooth scrolling
 - fine-pointer custom cursor and opt-in magnetic action
 - touch and reduced-motion adaptations
 - responsive behavior across compact, mobile, tablet, desktop, and wide screens
-- a live design-system review page using Aditya's supplied portrait
+- a progressive portfolio review page using Aditya's supplied portrait
 - documented component and content architecture
 
 See [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for the visual specification, [`CHARACTER_SYSTEM.md`](./CHARACTER_SYSTEM.md) for the canonical character contract and state machine, and [`NAVIGATION.md`](./NAVIGATION.md) for the navigation, active-section, accessibility, and scrolling architecture.
@@ -51,7 +52,9 @@ components/system/          navigation and interaction infrastructure
 components/ui/              button, heading, label, and reveal primitives
 hooks/useCharacterState.ts  section/scroll/hover/viewport character state machine
 hooks/useCharacterScrollScene.ts  ScrollTrigger scene choreography bridge
+hooks/useCharacterSequence.ts  multi-chapter character state sequencing
 data/resume.ts              authoritative resume content
+data/expertise.ts           verified expertise chapters derived from resume
 data/design-system.ts       typed visual-token metadata
 animations/motion.ts        Framer Motion source of truth
 animations/characterAnimations.ts  articulated character motion grammar

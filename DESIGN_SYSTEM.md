@@ -226,9 +226,11 @@ components/
 hooks/
   useCharacterState.ts     section, progress, hover/focus, viewport controller
   useCharacterScrollScene.ts  GSAP scene-progress bridge for character choreography
+  useCharacterSequence.ts  multi-chapter ScrollTrigger state sequencing
 
 data/
   resume.ts                authoritative typed transcription of the supplied resume
+  expertise.ts             five expertise chapters derived from resume skills
   design-system.ts         typed visual-token metadata; identity derives from resume
 
 animations/
@@ -302,13 +304,14 @@ The root route is intentionally a live design-system specimen rather than the fi
 - a readiness-aware `ADITYA RAI` opening film with phased numeric progress, clipped type, portrait preview, and a clip-path Hero handoff
 - an asymmetric `DESIGN. BUILD. CREATE.` Hero with layered headline choreography, a masked supplied portrait, concise identity copy, and magnetic work/contact actions
 - a resume-backed `HELLO, I'M ADITYA.` About chapter pairing oversized editorial type with a focused professional introduction
-- a persistent layered Aditya character whose Hero entry follows the portrait, then walks into and responds to the About chapter through ScrollTrigger progress
+- a five-chapter Expertise/Skills sequence covering verified design, development, data, methodology, and computer-science capabilities
+- abstract wireframe, code, graph, architecture, and logic studies rather than fabricated project screenshots
+- a persistent layered Aditya character whose state moves from design to code, analyze, present, and analyze across the expertise chapters
 - twelve character states driven by section, scroll progress, hover/focus intent, and viewport mode
 - a fixed chapter pulse that visualizes global scroll progress
 - a live animated signal route and high-energy interaction study
 - real type rendering
 - the black / off-white / crimson palette
-- spacing and radius tokens
 - motion timing and reduced-motion behavior
 - responsive composition
 - action, signal, project-index, and editorial primitives

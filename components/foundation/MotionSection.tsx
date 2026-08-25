@@ -7,7 +7,7 @@ export function MotionSection() {
   return (
     <section id="experience" className="motion-section page-section" aria-labelledby="motion-title" tabIndex={-1}>
       <div className="motion-field" aria-hidden="true"><i /><i /><i /></div>
-      <SectionLabel index="02" note="Interaction language">Meaning, then movement</SectionLabel>
+      <SectionLabel index="03" note="Interaction language">Meaning, then movement</SectionLabel>
       <SectionHeading
         id="motion-title"
         className="motion-heading"

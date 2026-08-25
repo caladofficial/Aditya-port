@@ -126,7 +126,11 @@ export const resume = {
     },
   ],
   skills: {
-    design: ["UI/UX Design", "Figma", "Adobe Suite"],
+    design: ["Figma", "Adobe Suite", "UI/UX Design"],
+    development: ["React", "Python", "Java", "SQL", "Git"],
+    fundamentals: ["DSA", "OOP", "DBMS", "Operating Systems"],
+    data: ["Power BI", "Data Visualization", "Reporting Automation"],
+    methodology: ["Agile", "SDLC"],
     technical: ["React", "Python", "Java", "SQL", "Git", "Agile", "Power BI"],
     computerScience: ["Data Structures and Algorithms", "OOP", "DBMS"],
     soft: [

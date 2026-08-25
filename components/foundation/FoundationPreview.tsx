@@ -3,14 +3,13 @@
 import { useCallback, useRef, useState } from "react";
 import { CharacterDirector } from "@/components/character";
 import { AboutSection } from "@/components/foundation/AboutSection";
-import { ArchitectureSection } from "@/components/foundation/ArchitectureSection";
 import { ComponentsSection } from "@/components/foundation/ComponentsSection";
+import { ExpertiseSection } from "@/components/foundation/ExpertiseSection";
 import { FoundationFooter } from "@/components/foundation/FoundationFooter";
 import { FoundationHero } from "@/components/foundation/FoundationHero";
 import { FoundationPreloader } from "@/components/foundation/FoundationPreloader";
 import { MotionSection } from "@/components/foundation/MotionSection";
 import { ResponsiveSection } from "@/components/foundation/ResponsiveSection";
-import { TokenSection } from "@/components/foundation/TokenSection";
 import { Cursor } from "@/components/system/Cursor";
 import { GlobalNavigation } from "@/components/system/GlobalNavigation";
 import { SmoothScroll } from "@/components/system/SmoothScroll";
@@ -46,11 +45,10 @@ export function FoundationPreview() {
         <CharacterDirector ready={ready} entryDelay={0.96} />
         <FoundationHero ready={ready} />
         <AboutSection />
-        <TokenSection />
+        <ExpertiseSection />
         <MotionSection />
         <ResponsiveSection />
         <ComponentsSection />
-        <ArchitectureSection />
         <FoundationFooter />
       </main>
     </SmoothScroll>
